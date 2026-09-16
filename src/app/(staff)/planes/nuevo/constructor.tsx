@@ -19,6 +19,16 @@ interface DiaUI {
   tiempos: TiempoUI[];
 }
 
+const TIEMPOS_SUGERIDOS = [
+  "Desayuno",
+  "Colación matutina",
+  "Comida",
+  "Colación vespertina",
+  "Merienda",
+  "Cena",
+  "Snack nocturno",
+];
+
 function diaVacio(numero: number): DiaUI {
   return {
     etiqueta: `Día ${numero}`,
@@ -75,6 +85,12 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
   return (
     <form action={accion} className="space-y-6">
       <input type="hidden" name="estructura" value={JSON.stringify(estructura)} />
+      <datalist id="tiempos-sugeridos">
+        {TIEMPOS_SUGERIDOS.map((t) => (
+          <option key={t} value={t} />
+        ))}
+      </datalist>
+
       <div className="grid grid-cols-2 gap-4 rounded-lg border border-cream-200 bg-white p-4">
         <Campo label="Nombre del plan" name="nombre">
           <Input name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
@@ -95,7 +111,7 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
                   return ds;
                 })
               }
-              className="text-sm font-semibold text-ink"
+              className="rounded-md px-1 text-sm font-semibold text-ink hover:bg-cream-100 focus:bg-cream-100 focus:outline-none"
             />
             {dias.length > 1 && (
               <button
@@ -112,8 +128,42 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
             const totales = totalesTiempo(tiempo.items);
             return (
               <div key={tIdx} className="rounded-md border border-cream-100 p-3">
-                <p className="mb-2 text-sm font-medium text-ink">{tiempo.nombre}</p>
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <input
+                    value={tiempo.nombre}
+                    list="tiempos-sugeridos"
+                    placeholder="Nombre del tiempo de comida"
+                    onChange={(e) =>
+                      actualizarDias((ds) => {
+                        ds[dIdx].tiempos[tIdx].nombre = e.target.value;
+                        return ds;
+                      })
+                    }
+                    className="rounded-md px-1 text-sm font-medium text-ink hover:bg-cream-100 focus:bg-cream-100 focus:outline-none"
+                  />
+                  {dia.tiempos.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() =>
+                        actualizarDias((ds) => {
+                          ds[dIdx].tiempos.splice(tIdx, 1);
+                          return ds;
+                        })
+                      }
+                      className="text-xs text-red-600 hover:underline"
+                    >
+                      Quitar tiempo
+                    </button>
+                  )}
+                </div>
                 <div className="space-y-2">
+                  {tiempo.items.length > 0 && (
+                    <div className="flex gap-2 px-0.5 text-xs text-ink-soft">
+                      <span className="flex-1">Alimento</span>
+                      <span className="w-24 text-center">Cantidad</span>
+                      <span className="w-12" />
+                    </div>
+                  )}
                   {tiempo.items.map((item, iIdx) => (
                     <div key={iIdx} className="flex items-center gap-2">
                       <select
@@ -133,18 +183,23 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
                           </option>
                         ))}
                       </select>
-                      <input
-                        type="number"
-                        value={item.gramos}
-                        onChange={(e) =>
-                          actualizarDias((ds) => {
-                            ds[dIdx].tiempos[tIdx].items[iIdx].gramos = Number(e.target.value) || 0;
-                            return ds;
-                          })
-                        }
-                        className="w-24 rounded-md border border-cream-200 px-2 py-1.5 text-sm"
-                        placeholder="gramos"
-                      />
+                      <div className="relative w-24">
+                        <input
+                          type="number"
+                          min={0}
+                          value={item.gramos}
+                          onChange={(e) =>
+                            actualizarDias((ds) => {
+                              ds[dIdx].tiempos[tIdx].items[iIdx].gramos = Number(e.target.value) || 0;
+                              return ds;
+                            })
+                          }
+                          className="w-full rounded-md border border-cream-200 py-1.5 pl-2 pr-6 text-sm"
+                        />
+                        <span className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-xs text-ink-soft">
+                          g
+                        </span>
+                      </div>
                       <button
                         type="button"
                         onClick={() =>
@@ -153,7 +208,7 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
                             return ds;
                           })
                         }
-                        className="text-xs text-red-600 hover:underline"
+                        className="w-12 text-xs text-red-600 hover:underline"
                       >
                         Quitar
                       </button>
@@ -180,6 +235,19 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
               </div>
             );
           })}
+
+          <button
+            type="button"
+            onClick={() =>
+              actualizarDias((ds) => {
+                ds[dIdx].tiempos.push({ nombre: "", items: [] });
+                return ds;
+              })
+            }
+            className="text-xs text-brand-700 hover:underline"
+          >
+            + Agregar tiempo de comida (colación, merienda, snack…)
+          </button>
         </div>
       ))}
 
