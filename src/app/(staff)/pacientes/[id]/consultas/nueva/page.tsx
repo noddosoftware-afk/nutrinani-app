@@ -18,7 +18,7 @@ export default async function NuevaConsultaPage({ params }: PageProps<"/paciente
 
   return (
     <div className="space-y-4">
-      <h2 className="text-sm font-semibold text-stone-700">Nueva consulta — {paciente.nombre_completo}</h2>
+      <h2 className="text-sm font-semibold text-ink">Nueva consulta — {paciente.nombre_completo}</h2>
       {!paciente.fecha_nacimiento && (
         <p className="rounded-md bg-amber-50 px-3 py-2 text-sm text-amber-800">
           Este paciente no tiene fecha de nacimiento registrada; los cálculos de edad-dependientes quedarán

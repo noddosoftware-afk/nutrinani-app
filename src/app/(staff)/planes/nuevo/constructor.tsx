@@ -75,7 +75,7 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
   return (
     <form action={accion} className="space-y-6">
       <input type="hidden" name="estructura" value={JSON.stringify(estructura)} />
-      <div className="grid grid-cols-2 gap-4 rounded-lg border border-stone-200 bg-white p-4">
+      <div className="grid grid-cols-2 gap-4 rounded-lg border border-cream-200 bg-white p-4">
         <Campo label="Nombre del plan" name="nombre">
           <Input name="nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
         </Campo>
@@ -85,7 +85,7 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
       </div>
 
       {dias.map((dia, dIdx) => (
-        <div key={dIdx} className="space-y-3 rounded-lg border border-stone-200 bg-white p-4">
+        <div key={dIdx} className="space-y-3 rounded-lg border border-cream-200 bg-white p-4">
           <div className="flex items-center justify-between">
             <input
               value={dia.etiqueta}
@@ -95,7 +95,7 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
                   return ds;
                 })
               }
-              className="text-sm font-semibold text-stone-700"
+              className="text-sm font-semibold text-ink"
             />
             {dias.length > 1 && (
               <button
@@ -111,8 +111,8 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
           {dia.tiempos.map((tiempo, tIdx) => {
             const totales = totalesTiempo(tiempo.items);
             return (
-              <div key={tIdx} className="rounded-md border border-stone-100 p-3">
-                <p className="mb-2 text-sm font-medium text-stone-700">{tiempo.nombre}</p>
+              <div key={tIdx} className="rounded-md border border-cream-100 p-3">
+                <p className="mb-2 text-sm font-medium text-ink">{tiempo.nombre}</p>
                 <div className="space-y-2">
                   {tiempo.items.map((item, iIdx) => (
                     <div key={iIdx} className="flex items-center gap-2">
@@ -124,7 +124,7 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
                             return ds;
                           })
                         }
-                        className="flex-1 rounded-md border border-stone-300 px-2 py-1.5 text-sm"
+                        className="flex-1 rounded-md border border-cream-200 px-2 py-1.5 text-sm"
                       >
                         <option value="">Selecciona un alimento…</option>
                         {alimentos.map((a) => (
@@ -142,7 +142,7 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
                             return ds;
                           })
                         }
-                        className="w-24 rounded-md border border-stone-300 px-2 py-1.5 text-sm"
+                        className="w-24 rounded-md border border-cream-200 px-2 py-1.5 text-sm"
                         placeholder="gramos"
                       />
                       <button
@@ -167,12 +167,12 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
                         return ds;
                       })
                     }
-                    className="text-xs text-emerald-700 hover:underline"
+                    className="text-xs text-brand-700 hover:underline"
                   >
                     + Agregar alimento
                   </button>
                 </div>
-                <p className="mt-2 text-xs text-stone-500">
+                <p className="mt-2 text-xs text-ink-soft">
                   Total: {totales.energiaKcal ?? "—"} kcal · P {totales.proteinaG ?? "—"}g · C {totales.carbohidratoG ?? "—"}g · G{" "}
                   {totales.grasaG ?? "—"}g
                   {totales.nutrientesIncompletos.length > 0 && " (algunos alimentos no tienen todos los nutrientes capturados)"}
@@ -187,7 +187,7 @@ export function ConstructorPlan({ pacienteId, alimentos }: { pacienteId: string;
         <button
           type="button"
           onClick={() => setDias((ds) => [...ds, diaVacio(ds.length + 1)])}
-          className="text-sm text-emerald-700 hover:underline"
+          className="text-sm text-brand-700 hover:underline"
         >
           + Agregar día
         </button>

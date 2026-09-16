@@ -12,15 +12,15 @@ export default async function ConfiguracionPage() {
 
   return (
     <div className="max-w-xl space-y-6">
-      <h1 className="text-xl font-semibold text-stone-900">Configuración del consultorio</h1>
-      <div className="rounded-lg border border-stone-200 bg-white p-4 text-sm">
+      <h1 className="text-xl font-semibold text-ink">Configuración del consultorio</h1>
+      <div className="rounded-lg border border-cream-200 bg-white p-4 text-sm">
         <dl className="space-y-2">
-          <div className="flex justify-between"><dt className="text-stone-500">Nombre</dt><dd>{consultorio?.nombre}</dd></div>
-          <div className="flex justify-between"><dt className="text-stone-500">Zona horaria</dt><dd>{consultorio?.zona_horaria}</dd></div>
-          <div className="flex justify-between"><dt className="text-stone-500">Moneda</dt><dd>{consultorio?.moneda}</dd></div>
+          <div className="flex justify-between"><dt className="text-ink-soft">Nombre</dt><dd>{consultorio?.nombre}</dd></div>
+          <div className="flex justify-between"><dt className="text-ink-soft">Zona horaria</dt><dd>{consultorio?.zona_horaria}</dd></div>
+          <div className="flex justify-between"><dt className="text-ink-soft">Moneda</dt><dd>{consultorio?.moneda}</dd></div>
         </dl>
       </div>
-      <p className="text-sm text-stone-500">
+      <p className="text-sm text-ink-soft">
         Personalización de logo, colores y plantillas queda para una siguiente iteración una vez validado el flujo
         clínico principal.
       </p>

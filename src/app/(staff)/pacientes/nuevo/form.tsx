@@ -10,7 +10,7 @@ export function NuevoPacienteForm() {
   });
 
   return (
-    <form action={formAction} className="space-y-4 rounded-lg border border-stone-200 bg-white p-6">
+    <form action={formAction} className="space-y-4 rounded-lg border border-cream-200 bg-white p-6">
       <Campo label="Nombre completo" name="nombre_completo">
         <Input id="nombre_completo" name="nombre_completo" required />
       </Campo>

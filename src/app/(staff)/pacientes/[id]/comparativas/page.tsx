@@ -16,21 +16,21 @@ export default async function ComparativasPage({ params, searchParams }: PagePro
 
   return (
     <div className="space-y-4">
-      <h2 className="text-sm font-semibold text-stone-700">Comparativa de evolución</h2>
+      <h2 className="text-sm font-semibold text-ink">Comparativa de evolución</h2>
 
       {mediciones.length < 2 ? (
-        <p className="text-sm text-stone-500">Se necesitan al menos dos mediciones para comparar.</p>
+        <p className="text-sm text-ink-soft">Se necesitan al menos dos mediciones para comparar.</p>
       ) : (
         <>
           <form className="flex flex-wrap items-end gap-3">
             <SelectorFecha label="Fecha inicial" name="inicial" mediciones={mediciones} valor={inicialId} />
             <SelectorFecha label="Fecha comparada" name="comparada" mediciones={mediciones} valor={comparadaId} />
-            <button className="rounded-md border border-stone-300 px-4 py-2 text-sm hover:bg-stone-100">Comparar</button>
+            <button className="rounded-md border border-cream-200 px-4 py-2 text-sm hover:bg-cream-100">Comparar</button>
           </form>
 
-          <div className="overflow-x-auto rounded-lg border border-stone-200 bg-white">
+          <div className="overflow-x-auto rounded-lg border border-cream-200 bg-white">
             <table className="w-full text-sm">
-              <thead className="border-b border-stone-200 text-left text-stone-500">
+              <thead className="border-b border-cream-200 text-left text-ink-soft">
                 <tr>
                   <th className="px-3 py-2">Indicador</th>
                   <th className="px-3 py-2">Inicial</th>
@@ -42,7 +42,7 @@ export default async function ComparativasPage({ params, searchParams }: PagePro
               </thead>
               <tbody>
                 {filas.map((f) => (
-                  <tr key={f.indicador} className="border-b border-stone-100 last:border-0">
+                  <tr key={f.indicador} className="border-b border-cream-100 last:border-0">
                     <td className="px-3 py-2 font-medium">{f.indicador}</td>
                     <td className="px-3 py-2">
                       {f.cambio.valorInicial ?? "—"} {f.cambio.valorInicial !== null ? f.unidad : ""}
@@ -56,18 +56,18 @@ export default async function ComparativasPage({ params, searchParams }: PagePro
                     </td>
                     <td className="px-3 py-2">
                       {f.cambio.cambioPorcentual !== null ? `${f.cambio.cambioPorcentual}%` : (
-                        <span className="text-stone-400" title={f.cambio.nota ?? ""}>
+                        <span className="text-ink-soft" title={f.cambio.nota ?? ""}>
                           no calculable
                         </span>
                       )}
                     </td>
-                    <td className="px-3 py-2 text-stone-400">{f.meta ?? "—"}</td>
+                    <td className="px-3 py-2 text-ink-soft">{f.meta ?? "—"}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-          <p className="text-xs text-stone-500">
+          <p className="text-xs text-ink-soft">
             Un cambio no implica automáticamente un resultado positivo o negativo — la interpretación depende del
             objetivo definido por la nutrióloga para cada paciente.
           </p>
@@ -90,8 +90,8 @@ function SelectorFecha({
 }) {
   return (
     <label className="text-sm">
-      <span className="block text-stone-700">{label}</span>
-      <select name={name} defaultValue={valor} className="mt-1 rounded-md border border-stone-300 px-3 py-2 text-sm">
+      <span className="block text-ink">{label}</span>
+      <select name={name} defaultValue={valor} className="mt-1 rounded-md border border-cream-200 px-3 py-2 text-sm">
         {mediciones.map((m) => (
           <option key={m.id} value={m.id}>
             {new Date(m.fecha).toLocaleDateString("es-MX")}

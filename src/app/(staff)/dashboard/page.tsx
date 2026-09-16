@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { Users, CalendarCheck, ClipboardList, Camera, Plus, Stethoscope, UtensilsCrossed } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { requireStaff } from "@/data/auth";
+import { Tarjeta } from "@/components/campo";
 
 async function obtenerMetricas() {
   await requireStaff();
@@ -49,40 +51,49 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-xl font-semibold text-stone-900">Panel principal</h1>
-        <p className="text-sm text-stone-500">Resumen del consultorio en tiempo real.</p>
+        <h1 className="font-display text-2xl font-semibold text-ink">Panel principal</h1>
+        <p className="text-sm text-ink-soft">Resumen del consultorio en tiempo real.</p>
       </div>
 
       <div className="flex flex-wrap gap-3">
-        <Link href="/pacientes/nuevo" className="rounded-md bg-emerald-700 px-4 py-2 text-sm text-white hover:bg-emerald-800">
-          + Nuevo paciente
+        <Link
+          href="/pacientes/nuevo"
+          className="inline-flex items-center gap-2 rounded-lg bg-brand-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-brand-800"
+        >
+          <Plus size={16} /> Nuevo paciente
         </Link>
-        <Link href="/pacientes" className="rounded-md border border-stone-300 px-4 py-2 text-sm hover:bg-stone-100">
-          Registrar consulta
+        <Link
+          href="/pacientes"
+          className="inline-flex items-center gap-2 rounded-lg border border-cream-200 bg-white px-4 py-2 text-sm hover:bg-cream-100"
+        >
+          <Stethoscope size={16} /> Registrar consulta
         </Link>
-        <Link href="/planes" className="rounded-md border border-stone-300 px-4 py-2 text-sm hover:bg-stone-100">
-          Preparar plan
+        <Link
+          href="/planes"
+          className="inline-flex items-center gap-2 rounded-lg border border-cream-200 bg-white px-4 py-2 text-sm hover:bg-cream-100"
+        >
+          <UtensilsCrossed size={16} /> Preparar plan
         </Link>
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Tarjeta titulo="Pacientes activos" valor={m.pacientesActivos} href="/pacientes" />
-        <Tarjeta titulo="Citas hoy" valor={m.consultasHoy.length} href="/agenda" />
-        <Tarjeta titulo="Planes pendientes" valor={m.planesPendientes.length} href="/planes" />
-        <Tarjeta titulo="Fotos recientes (30d)" valor={m.fotosRecientes.length} href="/pacientes" />
+        <StatCard icon={Users} titulo="Pacientes activos" valor={m.pacientesActivos} href="/pacientes" />
+        <StatCard icon={CalendarCheck} titulo="Citas hoy" valor={m.consultasHoy.length} href="/agenda" />
+        <StatCard icon={ClipboardList} titulo="Planes pendientes" valor={m.planesPendientes.length} href="/planes" />
+        <StatCard icon={Camera} titulo="Fotos recientes (30d)" valor={m.fotosRecientes.length} href="/pacientes" />
       </div>
 
       <section>
-        <h2 className="mb-2 text-sm font-semibold text-stone-700">
+        <h2 className="mb-2 text-sm font-semibold text-ink">
           Pacientes sin seguimiento en los últimos 30 días
         </h2>
         {m.pacientesSinSeguimientoReciente.length === 0 ? (
-          <p className="text-sm text-stone-500">Todos los pacientes activos tienen seguimiento reciente.</p>
+          <p className="text-sm text-ink-soft">Todos los pacientes activos tienen seguimiento reciente.</p>
         ) : (
-          <ul className="divide-y divide-stone-200 rounded-md border border-stone-200 bg-white">
+          <ul className="divide-y divide-cream-200 rounded-xl border border-cream-200 bg-white">
             {m.pacientesSinSeguimientoReciente.map((p) => (
               <li key={p.id} className="px-4 py-2 text-sm">
-                <Link href={`/pacientes/${p.id}`} className="text-emerald-800 hover:underline">
+                <Link href={`/pacientes/${p.id}`} className="text-brand-800 hover:underline">
                   {p.nombre_completo}
                 </Link>
               </li>
@@ -92,15 +103,15 @@ export default async function DashboardPage() {
       </section>
 
       <section>
-        <h2 className="mb-2 text-sm font-semibold text-stone-700">Planes pendientes de revisión</h2>
+        <h2 className="mb-2 text-sm font-semibold text-ink">Planes pendientes de revisión</h2>
         {m.planesPendientes.length === 0 ? (
-          <p className="text-sm text-stone-500">No hay planes en borrador o pendientes de aprobar.</p>
+          <p className="text-sm text-ink-soft">No hay planes en borrador o pendientes de aprobar.</p>
         ) : (
-          <ul className="divide-y divide-stone-200 rounded-md border border-stone-200 bg-white">
+          <ul className="divide-y divide-cream-200 rounded-xl border border-cream-200 bg-white">
             {m.planesPendientes.map((p) => (
               <li key={p.id} className="flex items-center justify-between px-4 py-2 text-sm">
                 <span>{p.nombre}</span>
-                <Link href={`/planes/${p.id}`} className="text-emerald-800 hover:underline">
+                <Link href={`/planes/${p.id}`} className="text-brand-800 hover:underline">
                   Revisar
                 </Link>
               </li>
@@ -112,11 +123,30 @@ export default async function DashboardPage() {
   );
 }
 
-function Tarjeta({ titulo, valor, href }: { titulo: string; valor: number; href: string }) {
+function StatCard({
+  icon: Icon,
+  titulo,
+  valor,
+  href,
+}: {
+  icon: typeof Users;
+  titulo: string;
+  valor: number;
+  href: string;
+}) {
   return (
-    <Link href={href} className="rounded-lg border border-stone-200 bg-white p-4 hover:border-emerald-300">
-      <p className="text-sm text-stone-500">{titulo}</p>
-      <p className="mt-1 text-2xl font-semibold text-stone-900">{valor}</p>
+    <Link href={href} className="group block">
+      <Tarjeta className="p-4 transition-colors group-hover:border-brand-400">
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+            <Icon size={20} />
+          </div>
+          <div>
+            <p className="text-sm text-ink-soft">{titulo}</p>
+            <p className="text-2xl font-semibold text-ink">{valor}</p>
+          </div>
+        </div>
+      </Tarjeta>
     </Link>
   );
 }

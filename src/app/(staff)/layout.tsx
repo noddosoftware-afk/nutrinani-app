@@ -1,19 +1,11 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { LogOut } from "lucide-react";
 import { redirect } from "next/navigation";
 import { getSesionActual } from "@/data/auth";
 import { cerrarSesion } from "@/app/login/actions";
-
-const NAV = [
-  { href: "/dashboard", label: "Inicio" },
-  { href: "/pacientes", label: "Pacientes" },
-  { href: "/agenda", label: "Agenda" },
-  { href: "/planes", label: "Planes" },
-  { href: "/alimentos", label: "Alimentos y recetas" },
-  { href: "/mensajes", label: "Mensajes" },
-  { href: "/reportes", label: "Reportes" },
-  { href: "/configuracion", label: "Configuración" },
-];
+import { Logo } from "@/components/logo";
+import { StaffNavDesktop, StaffNavMobile } from "./staff-nav";
 
 export default async function StaffLayout({ children }: { children: ReactNode }) {
   const sesion = await getSesionActual();
@@ -22,34 +14,26 @@ export default async function StaffLayout({ children }: { children: ReactNode })
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
-      <header className="border-b border-stone-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <Link href="/dashboard" className="text-lg font-semibold text-emerald-800">
-            NutriNani
+      <header className="border-b border-cream-200 bg-white">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+          <Link href="/dashboard" className="flex items-center gap-2">
+            <Logo size={32} />
+            <span className="font-display text-lg font-semibold text-brand-900">NutriNani</span>
           </Link>
-          <nav className="hidden gap-4 text-sm text-stone-600 md:flex">
-            {NAV.map((item) => (
-              <Link key={item.href} href={item.href} className="hover:text-emerald-800">
-                {item.label}
-              </Link>
-            ))}
-          </nav>
+          <StaffNavDesktop />
           <div className="flex items-center gap-3 text-sm">
-            <span className="text-stone-500">
+            <span className="hidden text-ink-soft sm:inline">
               {sesion.nombreCompleto} · {sesion.rol === "nutriologa" ? "Nutrióloga" : "Asistente"}
             </span>
             <form action={cerrarSesion}>
-              <button className="text-emerald-700 hover:underline">Salir</button>
+              <button className="flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-brand-700 hover:bg-cream-100">
+                <LogOut size={16} />
+                Salir
+              </button>
             </form>
           </div>
         </div>
-        <nav className="flex gap-4 overflow-x-auto border-t border-stone-100 px-4 py-2 text-sm text-stone-600 md:hidden">
-          {NAV.map((item) => (
-            <Link key={item.href} href={item.href} className="whitespace-nowrap hover:text-emerald-800">
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <StaffNavMobile />
       </header>
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>
     </div>

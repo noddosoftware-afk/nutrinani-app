@@ -25,13 +25,13 @@ export function ComparadorFotos({ fotos }: { fotos: Foto[] }) {
   return (
     <div className="space-y-6">
       <section>
-        <h3 className="mb-2 text-sm font-semibold text-stone-700">Galería cronológica</h3>
+        <h3 className="mb-2 text-sm font-semibold text-ink">Galería cronológica</h3>
         <div className="flex gap-3 overflow-x-auto pb-2">
           {ordenadas.map((f) => (
             <figure key={f.id} className="w-32 shrink-0 text-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={f.url} alt={f.vista} className="h-40 w-32 rounded-md object-cover" />
-              <figcaption className="mt-1 text-xs text-stone-500">
+              <figcaption className="mt-1 text-xs text-ink-soft">
                 {new Date(f.fecha_captura).toLocaleDateString("es-MX")} · {f.vista}
               </figcaption>
             </figure>
@@ -40,7 +40,7 @@ export function ComparadorFotos({ fotos }: { fotos: Foto[] }) {
       </section>
 
       <section>
-        <h3 className="mb-2 text-sm font-semibold text-stone-700">Comparador antes / después</h3>
+        <h3 className="mb-2 text-sm font-semibold text-ink">Comparador antes / después</h3>
         <div className="flex flex-wrap gap-3">
           <SelectorFoto label="Antes" fotos={ordenadas} valor={idA} onChange={setIdA} />
           <SelectorFoto label="Después" fotos={ordenadas} valor={idB} onChange={setIdB} />
@@ -52,22 +52,22 @@ export function ComparadorFotos({ fotos }: { fotos: Foto[] }) {
               <figure>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={fotoA.url} alt="Antes" className="w-full rounded-lg object-cover" />
-                <figcaption className="mt-1 text-center text-xs text-stone-500">
+                <figcaption className="mt-1 text-center text-xs text-ink-soft">
                   {new Date(fotoA.fecha_captura).toLocaleDateString("es-MX")}
                 </figcaption>
               </figure>
               <figure>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={fotoB.url} alt="Después" className="w-full rounded-lg object-cover" />
-                <figcaption className="mt-1 text-center text-xs text-stone-500">
+                <figcaption className="mt-1 text-center text-xs text-ink-soft">
                   {new Date(fotoB.fecha_captura).toLocaleDateString("es-MX")}
                 </figcaption>
               </figure>
             </div>
 
             <div>
-              <p className="mb-1 text-xs text-stone-500">Deslizador de superposición</p>
-              <div className="relative aspect-[3/4] max-w-sm overflow-hidden rounded-lg border border-stone-200">
+              <p className="mb-1 text-xs text-ink-soft">Deslizador de superposición</p>
+              <div className="relative aspect-[3/4] max-w-sm overflow-hidden rounded-lg border border-cream-200">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={fotoB.url} alt="Después" className="absolute inset-0 h-full w-full object-cover" />
                 <div className="absolute inset-0 overflow-hidden" style={{ width: `${slider}%` }}>
@@ -105,11 +105,11 @@ function SelectorFoto({
 }) {
   return (
     <label className="text-sm">
-      <span className="block text-stone-700">{label}</span>
+      <span className="block text-ink">{label}</span>
       <select
         value={valor}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1 rounded-md border border-stone-300 px-3 py-2 text-sm"
+        className="mt-1 rounded-md border border-cream-200 px-3 py-2 text-sm"
       >
         {fotos.map((f) => (
           <option key={f.id} value={f.id}>

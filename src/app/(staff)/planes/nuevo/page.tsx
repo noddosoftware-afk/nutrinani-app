@@ -16,7 +16,7 @@ export default async function NuevoPlanPage({ searchParams }: PageProps<"/planes
 
   return (
     <div className="space-y-4">
-      <h1 className="text-xl font-semibold text-stone-900">Nuevo plan — {paciente.nombre_completo}</h1>
+      <h1 className="text-xl font-semibold text-ink">Nuevo plan — {paciente.nombre_completo}</h1>
       <ConstructorPlan pacienteId={paciente.id} alimentos={alimentos} />
     </div>
   );

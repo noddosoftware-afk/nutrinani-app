@@ -1,6 +1,9 @@
+import { Apple, Search } from "lucide-react";
+import Image from "next/image";
 import { listarAlimentos } from "@/data/alimentos";
 import { crearAlimentoAction } from "./actions";
-import { Campo, Input, Select, Boton } from "@/components/campo";
+import { Campo, Input, Select, Boton, Tarjeta } from "@/components/campo";
+import { fotoDeAlimento } from "@/lib/foto-alimento";
 
 export default async function AlimentosPage({ searchParams }: PageProps<"/alimentos">) {
   const params = await searchParams;
@@ -9,10 +12,10 @@ export default async function AlimentosPage({ searchParams }: PageProps<"/alimen
 
   return (
     <div className="space-y-6">
-      <h1 className="text-xl font-semibold text-stone-900">Alimentos y recetas</h1>
+      <h1 className="font-display text-2xl font-semibold text-ink">Alimentos y recetas</h1>
 
-      <details className="rounded-lg border border-stone-200 bg-white p-4">
-        <summary className="cursor-pointer text-sm font-semibold text-stone-700">+ Agregar alimento al catálogo</summary>
+      <details className="rounded-lg border border-cream-200 bg-white p-4">
+        <summary className="cursor-pointer text-sm font-semibold text-ink">+ Agregar alimento al catálogo</summary>
         <form action={crearAlimentoAction} className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
           <Campo label="Nombre" name="nombre" className="col-span-2 sm:col-span-2">
             <Input name="nombre" required />
@@ -58,47 +61,55 @@ export default async function AlimentosPage({ searchParams }: PageProps<"/alimen
             <Boton type="submit">Guardar alimento</Boton>
           </div>
         </form>
-        <p className="mt-2 text-xs text-stone-500">
+        <p className="mt-2 text-xs text-ink-soft">
           Deja en blanco cualquier nutriente que no conozcas — se mostrará como &quot;desconocido&quot;, nunca como cero.
         </p>
       </details>
 
-      <form>
+      <form className="relative max-w-sm">
+        <Search size={16} className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-ink-soft" />
         <input
           type="search"
           name="q"
           defaultValue={busqueda}
           placeholder="Buscar alimento…"
-          className="w-full max-w-sm rounded-md border border-stone-300 px-3 py-2 text-sm"
+          className="w-full rounded-lg border border-cream-200 bg-white py-2 pl-9 pr-3 text-sm focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-100"
         />
       </form>
 
-      <div className="overflow-x-auto rounded-lg border border-stone-200 bg-white">
-        <table className="w-full text-sm">
-          <thead className="border-b border-stone-200 text-left text-stone-500">
-            <tr>
-              <th className="px-3 py-2">Nombre</th>
-              <th className="px-3 py-2">Categoría</th>
-              <th className="px-3 py-2">kcal/100g</th>
-              <th className="px-3 py-2">Prot.</th>
-              <th className="px-3 py-2">Carb.</th>
-              <th className="px-3 py-2">Grasa</th>
-            </tr>
-          </thead>
-          <tbody>
-            {alimentos.map((a) => (
-              <tr key={a.id} className="border-b border-stone-100 last:border-0">
-                <td className="px-3 py-2 font-medium">{a.nombre}</td>
-                <td className="px-3 py-2 text-stone-500">{a.categoria ?? "—"}</td>
-                <td className="px-3 py-2">{a.energia_kcal_100g ?? "desconocido"}</td>
-                <td className="px-3 py-2">{a.proteina_g_100g ?? "desconocido"}</td>
-                <td className="px-3 py-2">{a.carbohidrato_g_100g ?? "desconocido"}</td>
-                <td className="px-3 py-2">{a.grasa_g_100g ?? "desconocido"}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      {alimentos.length === 0 ? (
+        <div className="flex flex-col items-center gap-2 rounded-xl border border-dashed border-cream-200 bg-white py-12 text-center">
+          <Apple size={28} className="text-ink-soft" />
+          <p className="text-sm text-ink-soft">Sin alimentos en el catálogo todavía.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {alimentos.map((a) => {
+            const foto = fotoDeAlimento(a.nombre);
+            return (
+              <Tarjeta key={a.id} className="overflow-hidden">
+                <div className="relative aspect-square w-full bg-cream-100">
+                  {foto ? (
+                    <Image src={foto} alt={a.nombre} fill className="object-cover" sizes="200px" />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-ink-soft/50">
+                      <Apple size={32} />
+                    </div>
+                  )}
+                </div>
+                <div className="p-3">
+                  <p className="truncate text-sm font-medium text-ink">{a.nombre}</p>
+                  <p className="text-xs text-ink-soft">{a.categoria ?? "Sin categoría"}</p>
+                  <p className="mt-2 text-xs text-ink-soft">
+                    {a.energia_kcal_100g ?? "—"} kcal · P {a.proteina_g_100g ?? "—"}g · C {a.carbohidrato_g_100g ?? "—"}g
+                    · G {a.grasa_g_100g ?? "—"}g
+                  </p>
+                </div>
+              </Tarjeta>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

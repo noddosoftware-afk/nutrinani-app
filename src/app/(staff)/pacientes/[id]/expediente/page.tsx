@@ -13,8 +13,8 @@ export default async function ExpedientePage({ params }: PageProps<"/pacientes/[
 
   return (
     <form action={accion} className="max-w-3xl space-y-6">
-      <fieldset className="rounded-lg border border-stone-200 bg-white p-4">
-        <legend className="px-1 text-sm font-semibold text-stone-700">Objetivos y antecedentes</legend>
+      <fieldset className="rounded-lg border border-cream-200 bg-white p-4">
+        <legend className="px-1 text-sm font-semibold text-ink">Objetivos y antecedentes</legend>
         <div className="space-y-4">
           <Campo label="Objetivos" name="objetivos">
             <Textarea name="objetivos" defaultValue={p.objetivos ?? ""} rows={2} />
@@ -28,8 +28,8 @@ export default async function ExpedientePage({ params }: PageProps<"/pacientes/[
         </div>
       </fieldset>
 
-      <fieldset className="rounded-lg border border-stone-200 bg-white p-4">
-        <legend className="px-1 text-sm font-semibold text-stone-700">Alergias, medicamentos y preferencias</legend>
+      <fieldset className="rounded-lg border border-cream-200 bg-white p-4">
+        <legend className="px-1 text-sm font-semibold text-ink">Alergias, medicamentos y preferencias</legend>
         <div className="space-y-4">
           <Campo label="Alergias e intolerancias (separadas por coma)" name="alergias">
             <Input name="alergias" defaultValue={(p.alergias_intolerancias as string[]).join(", ")} />
@@ -46,8 +46,8 @@ export default async function ExpedientePage({ params }: PageProps<"/pacientes/[
         </div>
       </fieldset>
 
-      <fieldset className="rounded-lg border border-stone-200 bg-white p-4">
-        <legend className="px-1 text-sm font-semibold text-stone-700">Hábitos</legend>
+      <fieldset className="rounded-lg border border-cream-200 bg-white p-4">
+        <legend className="px-1 text-sm font-semibold text-ink">Hábitos</legend>
         <div className="space-y-4">
           <Campo label="Actividad física" name="actividad_fisica">
             <Input name="actividad_fisica" defaultValue={habitos.actividad_fisica ?? ""} />

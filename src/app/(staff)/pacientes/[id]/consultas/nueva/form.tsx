@@ -55,8 +55,8 @@ export function NuevaConsultaForm({
   return (
     <form action={formAction} className="grid gap-6 lg:grid-cols-2">
       <div className="space-y-6">
-        <fieldset className="rounded-lg border border-stone-200 bg-white p-4">
-          <legend className="px-1 text-sm font-semibold text-stone-700">Consulta</legend>
+        <fieldset className="rounded-lg border border-cream-200 bg-white p-4">
+          <legend className="px-1 text-sm font-semibold text-ink">Consulta</legend>
           <div className="space-y-4">
             <Campo label="Motivo" name="motivo">
               <Input name="motivo" />
@@ -76,8 +76,8 @@ export function NuevaConsultaForm({
           </div>
         </fieldset>
 
-        <fieldset className="rounded-lg border border-stone-200 bg-white p-4">
-          <legend className="px-1 text-sm font-semibold text-stone-700">Mediciones</legend>
+        <fieldset className="rounded-lg border border-cream-200 bg-white p-4">
+          <legend className="px-1 text-sm font-semibold text-ink">Mediciones</legend>
           <div className="grid grid-cols-2 gap-4">
             <Campo label="Peso (kg)" name="peso_kg">
               <Input name="peso_kg" type="number" step="0.1" onChange={(e) => setPesoKg(Number(e.target.value) || undefined)} />
@@ -100,8 +100,8 @@ export function NuevaConsultaForm({
           </div>
         </fieldset>
 
-        <fieldset className="rounded-lg border border-stone-200 bg-white p-4">
-          <legend className="px-1 text-sm font-semibold text-stone-700">Cálculos nutricionales</legend>
+        <fieldset className="rounded-lg border border-cream-200 bg-white p-4">
+          <legend className="px-1 text-sm font-semibold text-ink">Cálculos nutricionales</legend>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <Campo label="Sexo" name="sexo">
@@ -119,7 +119,7 @@ export function NuevaConsultaForm({
                 </Select>
               </Campo>
             </div>
-            <p className="text-xs text-stone-500">
+            <p className="text-xs text-ink-soft">
               Edad calculada: {edadAnios} años. Los cálculos de esta pantalla solo aplican a población adulta;
               menores, embarazo y lactancia quedan fuera de alcance de la Fase 1 (ver docs/PROPUESTA.md).
             </p>
@@ -169,10 +169,10 @@ export function NuevaConsultaForm({
       </div>
 
       <div className="space-y-4">
-        <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
-          <h3 className="mb-3 text-sm font-semibold text-emerald-900">Vista previa de cálculos</h3>
+        <div className="rounded-lg border border-brand-100 bg-brand-50 p-4">
+          <h3 className="mb-3 text-sm font-semibold text-brand-900">Vista previa de cálculos</h3>
           {!preview ? (
-            <p className="text-sm text-emerald-800">Captura peso y talla para ver los cálculos.</p>
+            <p className="text-sm text-brand-800">Captura peso y talla para ver los cálculos.</p>
           ) : (
             <div className="space-y-3 text-sm">
               <ResultadoLinea etiqueta="IMC" resultado={preview.imc} render={(v) => `${v.imc} (${v.categoria.replace("_", " ")})`} />
@@ -185,7 +185,7 @@ export function NuevaConsultaForm({
               )}
               {preview.macros?.valor && (
                 <div>
-                  <p className="font-medium text-emerald-900">Macronutrientes</p>
+                  <p className="font-medium text-brand-900">Macronutrientes</p>
                   <ul className="ml-4 list-disc">
                     <li>Proteína: {preview.macros.valor.proteina.gramos} g ({preview.macros.valor.proteina.gramosPorKg} g/kg)</li>
                     <li>Carbohidrato: {preview.macros.valor.carbohidrato.gramos} g ({preview.macros.valor.carbohidrato.gramosPorKg} g/kg)</li>
@@ -218,12 +218,12 @@ function ResultadoLinea<T>({
   return (
     <div>
       <div className="flex justify-between">
-        <span className="text-emerald-900">{etiqueta}</span>
-        <span className="font-medium text-emerald-900">
+        <span className="text-brand-900">{etiqueta}</span>
+        <span className="font-medium text-brand-900">
           {resultado.bloqueado || resultado.valor === null ? "—" : render(resultado.valor)}
         </span>
       </div>
-      <p className="text-xs text-emerald-700">{resultado.fuente} · {resultado.version}</p>
+      <p className="text-xs text-brand-700">{resultado.fuente} · {resultado.version}</p>
       {resultado.advertencias.map((a, i) => (
         <p key={i} className="text-xs text-amber-700">
           ⚠ {a}

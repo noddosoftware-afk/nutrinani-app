@@ -9,23 +9,23 @@ export default async function PortalPlanPage() {
   const plan = await planVigentePaciente(sesion.pacienteId);
 
   if (!plan) {
-    return <p className="text-sm text-stone-500">Tu nutrióloga aún no ha publicado un plan para ti.</p>;
+    return <p className="text-sm text-ink-soft">Tu nutrióloga aún no ha publicado un plan para ti.</p>;
   }
 
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-lg font-semibold text-stone-900">{plan.nombre}</h1>
-        {plan.objetivo_kcal && <p className="text-sm text-stone-500">Objetivo: {plan.objetivo_kcal} kcal/día</p>}
+        <h1 className="text-lg font-semibold text-ink">{plan.nombre}</h1>
+        {plan.objetivo_kcal && <p className="text-sm text-ink-soft">Objetivo: {plan.objetivo_kcal} kcal/día</p>}
       </div>
 
       {(plan.plan_dias ?? []).map((dia) => (
-        <div key={dia.id} className="space-y-2 rounded-lg border border-stone-200 bg-white p-4">
-          <h2 className="text-sm font-semibold text-stone-700">{dia.etiqueta ?? `Día ${dia.numero_dia}`}</h2>
+        <div key={dia.id} className="space-y-2 rounded-lg border border-cream-200 bg-white p-4">
+          <h2 className="text-sm font-semibold text-ink">{dia.etiqueta ?? `Día ${dia.numero_dia}`}</h2>
           {dia.plan_tiempos.map((tiempo) => (
             <div key={tiempo.id}>
-              <p className="text-sm font-medium text-emerald-800">{tiempo.nombre}</p>
-              <ul className="ml-4 list-disc text-sm text-stone-600">
+              <p className="text-sm font-medium text-brand-800">{tiempo.nombre}</p>
+              <ul className="ml-4 list-disc text-sm text-ink-soft">
                 {tiempo.plan_items.map((item) => (
                   <li key={item.id}>
                     {item.alimento?.nombre ?? item.receta?.nombre} — {item.cantidad_gramos} g

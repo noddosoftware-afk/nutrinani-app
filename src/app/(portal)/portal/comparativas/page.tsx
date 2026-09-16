@@ -22,21 +22,21 @@ export default async function PortalComparativasPage() {
   const filas = construirComparativa(mediciones[0] ?? null, mediciones[mediciones.length - 1] ?? null);
 
   if (mediciones.length < 2) {
-    return <p className="text-sm text-stone-500">Necesitas al menos dos mediciones registradas para ver tu progreso.</p>;
+    return <p className="text-sm text-ink-soft">Necesitas al menos dos mediciones registradas para ver tu progreso.</p>;
   }
 
   return (
     <div className="space-y-4">
-      <h1 className="text-lg font-semibold text-stone-900">Tu progreso</h1>
-      <p className="text-sm text-stone-500">
+      <h1 className="text-lg font-semibold text-ink">Tu progreso</h1>
+      <p className="text-sm text-ink-soft">
         Comparando {new Date(mediciones[0].fecha).toLocaleDateString("es-MX")} con{" "}
         {new Date(mediciones[mediciones.length - 1].fecha).toLocaleDateString("es-MX")}
       </p>
       <div className="space-y-3">
         {filas.map((f) => (
-          <div key={f.indicador} className="rounded-lg border border-stone-200 bg-white p-3">
+          <div key={f.indicador} className="rounded-lg border border-cream-200 bg-white p-3">
             <p className="text-sm font-medium">{f.indicador}</p>
-            <p className="text-sm text-stone-600">
+            <p className="text-sm text-ink-soft">
               {f.cambio.valorInicial ?? "—"} → {f.cambio.valorComparado ?? "—"} {f.unidad}
               {f.cambio.cambioPorcentual !== null ? ` (${f.cambio.cambioPorcentual}%)` : " (sin datos suficientes)"}
             </p>
