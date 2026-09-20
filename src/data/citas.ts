@@ -1,6 +1,6 @@
 import "server-only";
 import { createClient } from "@/lib/supabase/server";
-import { requireStaff, getSesionActual } from "./auth";
+import { requireStaff, requireNutriologa, getSesionActual } from "./auth";
 
 export type EstadoCita = "pendiente" | "confirmada" | "cancelada" | "completada";
 
@@ -146,4 +146,23 @@ export async function obtenerHorarioConsultorio() {
     duracion_cita_minutos: number;
     zona_horaria: string;
   };
+}
+
+export interface HorarioAtencion {
+  horario_atencion: Record<string, { inicio: string; fin: string } | null>;
+  duracion_cita_minutos: number;
+}
+
+/** Decisión de negocio (horario, duración de cita) — solo la nutrióloga la cambia. */
+export async function actualizarHorarioConsultorio(datos: HorarioAtencion) {
+  const sesion = await requireNutriologa();
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("consultorios")
+    .update({
+      horario_atencion: datos.horario_atencion,
+      duracion_cita_minutos: datos.duracion_cita_minutos,
+    } as never)
+    .eq("id", sesion.consultorioId);
+  if (error) throw error;
 }
