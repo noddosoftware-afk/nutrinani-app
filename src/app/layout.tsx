@@ -14,6 +14,7 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: "NutriNani",
   description: "Plataforma clínica para el consultorio de nutrición de Daniela",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
