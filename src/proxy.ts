@@ -6,7 +6,7 @@ import { NextResponse, type NextRequest } from "next/server";
 // La autorización real (quién puede ver/editar qué) se re-verifica siempre en el
 // servidor dentro de cada Data Access Layer (src/data/*) y en RLS — nunca solo aquí.
 
-const RUTAS_PUBLICAS = ["/login", "/auth"];
+const RUTAS_PUBLICAS = ["/login", "/auth", "/robots.txt"];
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
