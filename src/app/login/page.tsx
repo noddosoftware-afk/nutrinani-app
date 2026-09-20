@@ -22,7 +22,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
       </div>
       <div className="relative hidden flex-1 lg:block">
         <Image
-          src="/brand/hero-login.png"
+          src="/brand/hero-login.jpg"
           alt="Nutrióloga preparando un plan de alimentación saludable"
           fill
           priority

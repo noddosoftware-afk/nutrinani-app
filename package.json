@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
-    "seed": "tsx --env-file=.env.local scripts/seed.ts"
+    "seed": "tsx --env-file=.env.local scripts/seed.ts",
+    "seed:alimentos": "tsx --env-file=.env.local scripts/seed-alimentos-catalogo.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
