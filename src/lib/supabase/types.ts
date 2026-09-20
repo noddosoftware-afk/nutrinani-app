@@ -213,6 +213,70 @@ export type Database = {
           },
         ]
       }
+      citas: {
+        Row: {
+          actualizado_en: string
+          consultorio_id: string
+          creado_en: string
+          creado_por: string | null
+          estado: Database["public"]["Enums"]["estado_cita"]
+          fin: string
+          id: string
+          inicio: string
+          motivo: string | null
+          notas_internas: string | null
+          paciente_id: string
+        }
+        Insert: {
+          actualizado_en?: string
+          consultorio_id: string
+          creado_en?: string
+          creado_por?: string | null
+          estado?: Database["public"]["Enums"]["estado_cita"]
+          fin: string
+          id?: string
+          inicio: string
+          motivo?: string | null
+          notas_internas?: string | null
+          paciente_id: string
+        }
+        Update: {
+          actualizado_en?: string
+          consultorio_id?: string
+          creado_en?: string
+          creado_por?: string | null
+          estado?: Database["public"]["Enums"]["estado_cita"]
+          fin?: string
+          id?: string
+          inicio?: string
+          motivo?: string | null
+          notas_internas?: string | null
+          paciente_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "citas_consultorio_id_fkey"
+            columns: ["consultorio_id"]
+            isOneToOne: false
+            referencedRelation: "consultorios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "citas_creado_por_fkey"
+            columns: ["creado_por"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "citas_paciente_id_fkey"
+            columns: ["paciente_id"]
+            isOneToOne: false
+            referencedRelation: "pacientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       consentimientos: {
         Row: {
           fecha: string
@@ -315,6 +379,8 @@ export type Database = {
       consultorios: {
         Row: {
           creado_en: string
+          duracion_cita_minutos: number
+          horario_atencion: Json
           id: string
           moneda: string
           nombre: string
@@ -322,6 +388,8 @@ export type Database = {
         }
         Insert: {
           creado_en?: string
+          duracion_cita_minutos?: number
+          horario_atencion?: Json
           id?: string
           moneda?: string
           nombre: string
@@ -329,6 +397,8 @@ export type Database = {
         }
         Update: {
           creado_en?: string
+          duracion_cita_minutos?: number
+          horario_atencion?: Json
           id?: string
           moneda?: string
           nombre?: string
@@ -590,6 +660,51 @@ export type Database = {
           },
         ]
       }
+      mensajes: {
+        Row: {
+          autor_id: string
+          autor_rol: Database["public"]["Enums"]["rol_usuario"]
+          creado_en: string
+          cuerpo: string
+          id: string
+          leido_en: string | null
+          paciente_id: string
+        }
+        Insert: {
+          autor_id: string
+          autor_rol: Database["public"]["Enums"]["rol_usuario"]
+          creado_en?: string
+          cuerpo: string
+          id?: string
+          leido_en?: string | null
+          paciente_id: string
+        }
+        Update: {
+          autor_id?: string
+          autor_rol?: Database["public"]["Enums"]["rol_usuario"]
+          creado_en?: string
+          cuerpo?: string
+          id?: string
+          leido_en?: string | null
+          paciente_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mensajes_autor_id_fkey"
+            columns: ["autor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "mensajes_paciente_id_fkey"
+            columns: ["paciente_id"]
+            isOneToOne: false
+            referencedRelation: "pacientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pacientes: {
         Row: {
           actualizado_en: string
@@ -667,6 +782,64 @@ export type Database = {
             columns: ["creado_por"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pagos: {
+        Row: {
+          concepto: string
+          creado_en: string
+          fecha: string
+          id: string
+          metodo: string
+          monto: number
+          paciente_id: string
+          registrado_por: string | null
+          servicio_id: string | null
+        }
+        Insert: {
+          concepto: string
+          creado_en?: string
+          fecha?: string
+          id?: string
+          metodo: string
+          monto: number
+          paciente_id: string
+          registrado_por?: string | null
+          servicio_id?: string | null
+        }
+        Update: {
+          concepto?: string
+          creado_en?: string
+          fecha?: string
+          id?: string
+          metodo?: string
+          monto?: number
+          paciente_id?: string
+          registrado_por?: string | null
+          servicio_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pagos_paciente_id_fkey"
+            columns: ["paciente_id"]
+            isOneToOne: false
+            referencedRelation: "pacientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pagos_registrado_por_fkey"
+            columns: ["registrado_por"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pagos_servicio_id_fkey"
+            columns: ["servicio_id"]
+            isOneToOne: false
+            referencedRelation: "servicios"
             referencedColumns: ["id"]
           },
         ]
@@ -1062,6 +1235,44 @@ export type Database = {
           },
         ]
       }
+      servicios: {
+        Row: {
+          activo: boolean
+          consultorio_id: string
+          creado_en: string
+          descripcion: string | null
+          id: string
+          nombre: string
+          precio: number
+        }
+        Insert: {
+          activo?: boolean
+          consultorio_id: string
+          creado_en?: string
+          descripcion?: string | null
+          id?: string
+          nombre: string
+          precio: number
+        }
+        Update: {
+          activo?: boolean
+          consultorio_id?: string
+          creado_en?: string
+          descripcion?: string | null
+          id?: string
+          nombre?: string
+          precio?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "servicios_consultorio_id_fkey"
+            columns: ["consultorio_id"]
+            isOneToOne: false
+            referencedRelation: "consultorios"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -1085,6 +1296,7 @@ export type Database = {
       }
     }
     Enums: {
+      estado_cita: "pendiente" | "confirmada" | "cancelada" | "completada"
       rol_usuario: "nutriologa" | "asistente" | "paciente"
     }
     CompositeTypes: {
@@ -1216,6 +1428,7 @@ export const Constants = {
   },
   public: {
     Enums: {
+      estado_cita: ["pendiente", "confirmada", "cancelada", "completada"],
       rol_usuario: ["nutriologa", "asistente", "paciente"],
     },
   },

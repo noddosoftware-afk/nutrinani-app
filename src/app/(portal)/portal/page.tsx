@@ -1,14 +1,24 @@
 import Link from "next/link";
-import { Camera, ClipboardList, TrendingUp } from "lucide-react";
+import { Camera, ClipboardList, TrendingUp, CalendarDays, MessageCircle } from "lucide-react";
 import { redirect } from "next/navigation";
+import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { getSesionActual } from "@/data/auth";
 import { planVigentePaciente } from "@/data/planes";
+import { listarCitasPaciente } from "@/data/citas";
+import { ahoraMs } from "@/lib/ahora";
 
 export default async function PortalResumenPage() {
   const sesion = await getSesionActual();
   if (!sesion?.pacienteId) redirect("/login");
 
-  const plan = await planVigentePaciente(sesion.pacienteId);
+  const [plan, citas] = await Promise.all([
+    planVigentePaciente(sesion.pacienteId),
+    listarCitasPaciente(sesion.pacienteId),
+  ]);
+  const proximaCita = citas
+    .filter((c) => c.estado !== "cancelada" && new Date(c.inicio).getTime() >= ahoraMs())
+    .sort((a, b) => a.inicio.localeCompare(b.inicio))[0];
 
   return (
     <div className="space-y-4">
@@ -29,6 +39,20 @@ export default async function PortalResumenPage() {
         )}
       </div>
 
+      <Link
+        href="/portal/citas"
+        className="flex items-center gap-2 rounded-2xl border border-cream-200 bg-white p-4 text-sm hover:border-brand-400"
+      >
+        <CalendarDays size={18} className="text-brand-700" />
+        {proximaCita ? (
+          <span className="capitalize">
+            Próxima cita: {format(new Date(proximaCita.inicio), "EEEE d 'de' MMMM, HH:mm", { locale: es })}
+          </span>
+        ) : (
+          <span className="text-ink-soft">Sin citas próximas</span>
+        )}
+      </Link>
+
       <div className="grid grid-cols-2 gap-3">
         <Link
           href="/portal/fotografias"
@@ -43,6 +67,20 @@ export default async function PortalResumenPage() {
         >
           <TrendingUp size={22} className="text-brand-700" />
           Ver mi progreso
+        </Link>
+        <Link
+          href="/portal/mensajes"
+          className="flex flex-col items-center gap-2 rounded-2xl border border-cream-200 bg-white p-4 text-center text-sm hover:border-brand-400"
+        >
+          <MessageCircle size={22} className="text-brand-700" />
+          Enviar mensaje
+        </Link>
+        <Link
+          href="/portal/citas"
+          className="flex flex-col items-center gap-2 rounded-2xl border border-cream-200 bg-white p-4 text-center text-sm hover:border-brand-400"
+        >
+          <CalendarDays size={22} className="text-brand-700" />
+          Ver mis citas
         </Link>
       </div>
     </div>

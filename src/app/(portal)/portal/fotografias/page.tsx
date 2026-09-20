@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getSesionActual } from "@/data/auth";
 import { listarFotografias, urlFirmadaFoto } from "@/data/fotografias";
-import { subirFotoPropiaAction } from "./actions";
+import { SubirFotoForm } from "./subir-foto-form";
 
 export default async function PortalFotografiasPage() {
   const sesion = await getSesionActual();
@@ -12,19 +12,7 @@ export default async function PortalFotografiasPage() {
 
   return (
     <div className="space-y-6">
-      <form action={subirFotoPropiaAction} className="space-y-3 rounded-lg border border-cream-200 bg-white p-4">
-        <p className="text-sm font-semibold text-ink">Subir foto de progreso</p>
-        <input type="file" name="archivo" accept="image/*" capture="environment" required className="w-full text-sm" />
-        <select name="vista" className="w-full rounded-md border border-cream-200 px-2 py-1.5 text-sm">
-          <option value="frente">Frente</option>
-          <option value="perfil">Perfil</option>
-          <option value="espalda">Espalda</option>
-        </select>
-        <button className="w-full rounded-md bg-brand-700 px-3 py-2 text-sm text-white hover:bg-brand-800">Subir</button>
-        <p className="text-xs text-ink-soft">
-          Tu nutrióloga revisará esta foto de forma privada antes de compartirla contigo en las comparativas.
-        </p>
-      </form>
+      <SubirFotoForm />
 
       <div>
         <p className="mb-2 text-sm font-semibold text-ink">Fotos compartidas contigo</p>

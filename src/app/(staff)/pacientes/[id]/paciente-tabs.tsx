@@ -11,6 +11,7 @@ import {
   Camera,
   TrendingUp,
   FolderOpen,
+  CreditCard,
   type LucideIcon,
 } from "lucide-react";
 
@@ -23,6 +24,7 @@ const TABS: { seg: string; label: string; icon: LucideIcon }[] = [
   { seg: "fotografias", label: "Fotografías", icon: Camera },
   { seg: "comparativas", label: "Comparativas", icon: TrendingUp },
   { seg: "documentos", label: "Archivos", icon: FolderOpen },
+  { seg: "pagos", label: "Pagos", icon: CreditCard },
 ];
 
 export function PacienteTabs({ id }: { id: string }) {
