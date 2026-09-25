@@ -493,6 +493,63 @@ export type Database = {
           },
         ]
       }
+      ejercicios: {
+        Row: {
+          consultorio_id: string
+          creado_en: string
+          creado_por: string | null
+          descripcion: string | null
+          grupo_muscular: string
+          id: string
+          nivel: Database["public"]["Enums"]["nivel_entrenamiento"]
+          nombre: string
+          repeticiones_sugeridas: string | null
+          series_sugeridas: number | null
+          video_url: string | null
+        }
+        Insert: {
+          consultorio_id: string
+          creado_en?: string
+          creado_por?: string | null
+          descripcion?: string | null
+          grupo_muscular: string
+          id?: string
+          nivel: Database["public"]["Enums"]["nivel_entrenamiento"]
+          nombre: string
+          repeticiones_sugeridas?: string | null
+          series_sugeridas?: number | null
+          video_url?: string | null
+        }
+        Update: {
+          consultorio_id?: string
+          creado_en?: string
+          creado_por?: string | null
+          descripcion?: string | null
+          grupo_muscular?: string
+          id?: string
+          nivel?: Database["public"]["Enums"]["nivel_entrenamiento"]
+          nombre?: string
+          repeticiones_sugeridas?: string | null
+          series_sugeridas?: number | null
+          video_url?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ejercicios_consultorio_id_fkey"
+            columns: ["consultorio_id"]
+            isOneToOne: false
+            referencedRelation: "consultorios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "ejercicios_creado_por_fkey"
+            columns: ["creado_por"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       fotografias: {
         Row: {
           consentimiento_id: string | null
@@ -1235,6 +1292,134 @@ export type Database = {
           },
         ]
       }
+      rutina_dias: {
+        Row: {
+          etiqueta: string | null
+          id: string
+          numero_dia: number
+          rutina_id: string
+        }
+        Insert: {
+          etiqueta?: string | null
+          id?: string
+          numero_dia: number
+          rutina_id: string
+        }
+        Update: {
+          etiqueta?: string | null
+          id?: string
+          numero_dia?: number
+          rutina_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rutina_dias_rutina_id_fkey"
+            columns: ["rutina_id"]
+            isOneToOne: false
+            referencedRelation: "rutinas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rutina_ejercicios: {
+        Row: {
+          descanso_segundos: number | null
+          ejercicio_id: string
+          id: string
+          notas: string | null
+          orden: number
+          repeticiones: string
+          rutina_dia_id: string
+          series: number
+        }
+        Insert: {
+          descanso_segundos?: number | null
+          ejercicio_id: string
+          id?: string
+          notas?: string | null
+          orden?: number
+          repeticiones?: string
+          rutina_dia_id: string
+          series?: number
+        }
+        Update: {
+          descanso_segundos?: number | null
+          ejercicio_id?: string
+          id?: string
+          notas?: string | null
+          orden?: number
+          repeticiones?: string
+          rutina_dia_id?: string
+          series?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rutina_ejercicios_ejercicio_id_fkey"
+            columns: ["ejercicio_id"]
+            isOneToOne: false
+            referencedRelation: "ejercicios"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rutina_ejercicios_rutina_dia_id_fkey"
+            columns: ["rutina_dia_id"]
+            isOneToOne: false
+            referencedRelation: "rutina_dias"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rutinas: {
+        Row: {
+          actualizado_en: string
+          creado_en: string
+          creado_por: string | null
+          estado: string
+          id: string
+          nombre: string
+          paciente_id: string
+          publicado_en: string | null
+          recomendaciones: string | null
+        }
+        Insert: {
+          actualizado_en?: string
+          creado_en?: string
+          creado_por?: string | null
+          estado?: string
+          id?: string
+          nombre: string
+          paciente_id: string
+          publicado_en?: string | null
+          recomendaciones?: string | null
+        }
+        Update: {
+          actualizado_en?: string
+          creado_en?: string
+          creado_por?: string | null
+          estado?: string
+          id?: string
+          nombre?: string
+          paciente_id?: string
+          publicado_en?: string | null
+          recomendaciones?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rutinas_creado_por_fkey"
+            columns: ["creado_por"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rutinas_paciente_id_fkey"
+            columns: ["paciente_id"]
+            isOneToOne: false
+            referencedRelation: "pacientes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       servicios: {
         Row: {
           activo: boolean
@@ -1297,6 +1482,7 @@ export type Database = {
     }
     Enums: {
       estado_cita: "pendiente" | "confirmada" | "cancelada" | "completada"
+      nivel_entrenamiento: "principiante" | "intermedio" | "avanzado"
       rol_usuario: "nutriologa" | "asistente" | "paciente"
     }
     CompositeTypes: {
@@ -1429,6 +1615,7 @@ export const Constants = {
   public: {
     Enums: {
       estado_cita: ["pendiente", "confirmada", "cancelada", "completada"],
+      nivel_entrenamiento: ["principiante", "intermedio", "avanzado"],
       rol_usuario: ["nutriologa", "asistente", "paciente"],
     },
   },

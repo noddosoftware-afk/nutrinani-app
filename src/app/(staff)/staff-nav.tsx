@@ -14,6 +14,7 @@ import {
   Settings,
   Menu,
   X,
+  Dumbbell,
   type LucideIcon,
 } from "lucide-react";
 
@@ -23,6 +24,7 @@ const NAV: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/agenda", label: "Agenda", icon: CalendarDays },
   { href: "/planes", label: "Planes", icon: ClipboardList },
   { href: "/alimentos", label: "Alimentos", icon: Apple },
+  { href: "/entrenamientos", label: "Entrenamientos", icon: Dumbbell },
   { href: "/mensajes", label: "Mensajes", icon: MessageCircle },
   { href: "/reportes", label: "Reportes", icon: BarChart3 },
   { href: "/configuracion", label: "Configuración", icon: Settings },

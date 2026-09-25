@@ -12,6 +12,7 @@ import {
   TrendingUp,
   FolderOpen,
   CreditCard,
+  Dumbbell,
   type LucideIcon,
 } from "lucide-react";
 import { Select } from "@/components/campo";
@@ -22,6 +23,7 @@ const TABS: { seg: string; label: string; icon: LucideIcon }[] = [
   { seg: "consultas", label: "Consultas", icon: Stethoscope },
   { seg: "mediciones", label: "Mediciones", icon: Ruler },
   { seg: "planes", label: "Planes", icon: ClipboardList },
+  { seg: "rutinas", label: "Rutinas", icon: Dumbbell },
   { seg: "fotografias", label: "Fotografías", icon: Camera },
   { seg: "comparativas", label: "Comparativas", icon: TrendingUp },
   { seg: "documentos", label: "Archivos", icon: FolderOpen },
