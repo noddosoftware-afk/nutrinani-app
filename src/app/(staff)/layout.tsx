@@ -25,7 +25,7 @@ export default async function StaffLayout({ children }: { children: ReactNode })
           </div>
           <StaffNavDesktop />
           <div className="flex items-center gap-3 text-sm">
-            <span className="hidden text-ink-soft sm:inline">
+            <span className="hidden text-ink-soft xl:inline">
               {sesion.nombreCompleto} · {sesion.rol === "nutriologa" ? "Nutrióloga" : "Asistente"}
             </span>
             <form action={cerrarSesion}>

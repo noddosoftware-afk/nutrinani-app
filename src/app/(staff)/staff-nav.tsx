@@ -22,7 +22,7 @@ const NAV: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/pacientes", label: "Pacientes", icon: Users },
   { href: "/agenda", label: "Agenda", icon: CalendarDays },
   { href: "/planes", label: "Planes", icon: ClipboardList },
-  { href: "/alimentos", label: "Alimentos y recetas", icon: Apple },
+  { href: "/alimentos", label: "Alimentos", icon: Apple },
   { href: "/mensajes", label: "Mensajes", icon: MessageCircle },
   { href: "/reportes", label: "Reportes", icon: BarChart3 },
   { href: "/configuracion", label: "Configuración", icon: Settings },
@@ -35,14 +35,14 @@ function esActivo(pathname: string, href: string) {
 export function StaffNavDesktop() {
   const pathname = usePathname();
   return (
-    <nav className="hidden gap-1 text-sm md:flex">
+    <nav className="hidden gap-0.5 text-sm xl:flex">
       {NAV.map((item) => {
         const activo = esActivo(pathname, item.href);
         return (
           <Link
             key={item.href}
             href={item.href}
-            className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 transition-colors ${
+            className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2 py-1.5 transition-colors ${
               activo ? "bg-brand-50 text-brand-800 font-medium" : "text-ink-soft hover:bg-cream-100 hover:text-ink"
             }`}
           >
@@ -68,13 +68,13 @@ export function StaffMobileNav() {
         type="button"
         onClick={() => setAbierto(true)}
         aria-label="Abrir menú"
-        className="rounded-lg p-2 text-ink-soft hover:bg-cream-100 md:hidden"
+        className="rounded-lg p-2 text-ink-soft hover:bg-cream-100 xl:hidden"
       >
         <Menu size={22} />
       </button>
 
       {abierto && (
-        <div className="fixed inset-0 z-50 md:hidden">
+        <div className="fixed inset-0 z-50 xl:hidden">
           <button
             type="button"
             aria-label="Cerrar menú"
