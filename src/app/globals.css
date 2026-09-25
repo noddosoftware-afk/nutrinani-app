@@ -1,24 +1,25 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta cálida de bienestar: verde esmeralda como marca, crema como base,
-     terracota como acento puntual — nunca como color de fondo grande. */
-  --color-cream: #fbf7f0;
-  --color-cream-100: #f5efe3;
-  --color-cream-200: #ece2cf;
-  --color-ink: #2c2620;
-  --color-ink-soft: #6b6255;
+  /* Identidad premium de Daniela Balandran: marfil y neutros cálidos como base,
+     café elegante como color de acción, rosa empolvado/nude como acentos sutiles.
+     Sin verdes de nutrición, sin saturación — consultorio privado, no SaaS genérico. */
+  --color-cream: #faf7f4;
+  --color-cream-100: #f5efeb;
+  --color-cream-200: #e8deda;
+  --color-ink: #574a45;
+  --color-ink-soft: #8d817b;
 
-  --color-brand-50: #eaf5ef;
-  --color-brand-100: #cfe9db;
-  --color-brand-400: #2f9169;
-  --color-brand-600: #16744f;
-  --color-brand-700: #0f6b52;
-  --color-brand-800: #0c4f3d;
-  --color-brand-900: #0a3b2e;
+  --color-brand-50: #f8f1ef;
+  --color-brand-100: #e6c8c5;
+  --color-brand-400: #d8c0b5;
+  --color-brand-600: #9b8277;
+  --color-brand-700: #574a45;
+  --color-brand-800: #463b37;
+  --color-brand-900: #382f2c;
 
-  --color-accent: #e07856;
-  --color-accent-soft: #f6ddc9;
+  --color-accent: #cfa6a3;
+  --color-accent-soft: #e6c8c5;
 
   --background: var(--color-cream);
   --foreground: var(--color-ink);
@@ -45,8 +46,8 @@
   --color-accent: var(--color-accent);
   --color-accent-soft: var(--color-accent-soft);
 
-  --font-sans: var(--font-geist-sans);
-  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-playfair);
   --font-mono: var(--font-geist-mono);
 }
 
@@ -58,4 +59,9 @@ body {
 ::selection {
   background: var(--color-brand-100);
   color: var(--color-brand-900);
+}
+
+/* Sombra de marca: extremadamente sutil, nunca dura. Usar en vez de shadow-md/lg. */
+.shadow-soft {
+  box-shadow: 0 4px 20px rgba(75, 55, 50, 0.05);
 }

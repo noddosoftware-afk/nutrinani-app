@@ -3,6 +3,7 @@ import { Users, CalendarCheck, ClipboardList, Camera, Plus, Stethoscope, Utensil
 import { createClient } from "@/lib/supabase/server";
 import { requireStaff } from "@/data/auth";
 import { Tarjeta } from "@/components/campo";
+import { ahoraMs } from "@/lib/ahora";
 
 async function obtenerMetricas() {
   await requireStaff();
@@ -45,32 +46,39 @@ async function obtenerMetricas() {
   };
 }
 
+function saludo(hora: number) {
+  if (hora < 12) return "Buenos días";
+  if (hora < 19) return "Buenas tardes";
+  return "Buenas noches";
+}
+
 export default async function DashboardPage() {
   const m = await obtenerMetricas();
+  const hora = new Date(ahoraMs()).getHours();
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div>
-        <h1 className="font-display text-2xl font-semibold text-ink">Panel principal</h1>
-        <p className="text-sm text-ink-soft">Resumen del consultorio en tiempo real.</p>
+        <h1 className="font-display text-3xl italic text-brand-900">{saludo(hora)}, Daniela</h1>
+        <p className="mt-1 text-sm text-ink-soft">Este es el resumen de tu consultorio.</p>
       </div>
 
       <div className="flex flex-wrap gap-3">
         <Link
           href="/pacientes/nuevo"
-          className="inline-flex items-center gap-2 rounded-lg bg-brand-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-brand-800"
+          className="inline-flex items-center gap-2 rounded-xl bg-brand-700 px-4 py-2.5 text-sm font-medium text-white shadow-soft hover:bg-brand-800"
         >
           <Plus size={16} /> Nuevo paciente
         </Link>
         <Link
           href="/pacientes"
-          className="inline-flex items-center gap-2 rounded-lg border border-cream-200 bg-white px-4 py-2 text-sm hover:bg-cream-100"
+          className="inline-flex items-center gap-2 rounded-xl border border-brand-400/60 bg-white px-4 py-2.5 text-sm text-ink hover:bg-brand-50"
         >
           <Stethoscope size={16} /> Registrar consulta
         </Link>
         <Link
           href="/planes"
-          className="inline-flex items-center gap-2 rounded-lg border border-cream-200 bg-white px-4 py-2 text-sm hover:bg-cream-100"
+          className="inline-flex items-center gap-2 rounded-xl border border-brand-400/60 bg-white px-4 py-2.5 text-sm text-ink hover:bg-brand-50"
         >
           <UtensilsCrossed size={16} /> Preparar plan
         </Link>
@@ -138,7 +146,7 @@ function StatCard({
     <Link href={href} className="group block">
       <Tarjeta className="p-4 transition-colors group-hover:border-brand-400">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-50 text-brand-700">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-700">
             <Icon size={20} />
           </div>
           <div>
