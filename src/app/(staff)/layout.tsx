@@ -15,7 +15,7 @@ export default async function StaffLayout({ children }: { children: ReactNode })
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <header className="border-b border-cream-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
           <div className="flex items-center gap-1">
             <StaffMobileNav />
             <Link href="/dashboard" className="flex items-center gap-2">

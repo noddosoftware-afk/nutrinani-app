@@ -44,7 +44,7 @@ export function StaffNavDesktop() {
           <Link
             key={item.href}
             href={item.href}
-            className={`flex items-center gap-1.5 whitespace-nowrap rounded-lg px-2 py-1.5 transition-colors ${
+            className={`flex items-center gap-1 whitespace-nowrap rounded-lg px-1.5 py-1.5 transition-colors ${
               activo ? "bg-brand-50 text-brand-800 font-medium" : "text-ink-soft hover:bg-cream-100 hover:text-ink"
             }`}
           >
